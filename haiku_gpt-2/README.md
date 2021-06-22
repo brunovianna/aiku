@@ -1,3 +1,11 @@
+## Instructions for myself
+
+* Use with nvidia-docker
+* Build with ```nvidia-docker build . -t haiku:0.1```
+* Run with ```
+nvidia-docker run --name haiku -p 8070:8080 haiku:0.1```
+
+
 ## Forked from:
 
 https://github.com/brianweet/gpt-2-haiku
