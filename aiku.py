@@ -289,51 +289,55 @@ class App(tk.Tk):
 
             img, prompt = detect_objects (img)
             
-
-            self.ph = ImageTk.PhotoImage(img)
-            self.picture_display.config(image=self.ph)
-            self.picture_display.update()
-            print ("just showed "+image_url)
-
-            response = BytesIO()
-            if (prompt!=""):
-                prompts = prompt.split('+')
-                clean_prompt = ""
-                for oneword in prompts:
-                    if  (clean_prompt.find(oneword))==-1:
-                        clean_prompt = clean_prompt + oneword + "+"
-                    
-                print ("prompts "+str(prompts))
-                print ("clean prompt: "+clean_prompt)
-
-                readable_prompt = ", ".join(clean_prompt.split('+'))
-                readable_prompt = readable_prompt[0:len(readable_prompt)-2]
-                readable_prompt = readable_prompt+"\n"
-                
-
-                response.write (b"--print--|thinking of...|")
-                response.write (readable_prompt.encode('utf-8')) 
-                self.serialPort.write(response.getvalue())
-
-                try:
-                    r = requests.get("http://172.23.61.137:8070/"+clean_prompt)
-                except:
-                    print ("Network error:")
-
-                print ("haikus: "+r.text)
-                #response.write ("GET request for haiku {}".format(self.path).encode('utf-8'))
-                response.write (b"--print--")
-                if (r.text != ""):
-                    response.write (r.text.encode('utf-8')) 
-                    delay = 7000
-                else:
-                    response.write (b"|not inspired, sorry") 
-                    delay = 2500
-                self.serialPort.write(response.getvalue())
+            #for some reasons, it can't load some formats
+            try:
+              self.ph = ImageTk.PhotoImage(img)
+            except:
+              print ("couldn't load image")
             else:
-                response.write (b"--print--|Nothing found")
-                self.serialPort.write(response.getvalue())
-                delay = 2500
+              self.picture_display.config(image=self.ph)
+              self.picture_display.update()
+              print ("just showed "+image_url)
+
+              response = BytesIO()
+              if (prompt!=""):
+                  prompts = prompt.split('+')
+                  clean_prompt = ""
+                  for oneword in prompts:
+                      if  (clean_prompt.find(oneword))==-1:
+                          clean_prompt = clean_prompt + oneword + "+"
+                      
+                  print ("prompts "+str(prompts))
+                  print ("clean prompt: "+clean_prompt)
+
+                  readable_prompt = ", ".join(clean_prompt.split('+'))
+                  readable_prompt = readable_prompt[0:len(readable_prompt)-2]
+                  readable_prompt = readable_prompt+"\n"
+                  
+
+                  response.write (b"--print--|thinking of...|")
+                  response.write (readable_prompt.encode('utf-8')) 
+                  self.serialPort.write(response.getvalue())
+
+                  try:
+                      r = requests.get("http://172.23.61.137:8070/"+clean_prompt)
+                  except:
+                      print ("Network error:")
+
+                  print ("haikus: "+r.text)
+                  #response.write ("GET request for haiku {}".format(self.path).encode('utf-8'))
+                  response.write (b"--print--")
+                  if (r.text != ""):
+                      response.write (r.text.encode('utf-8')) 
+                      delay = 7000
+                  else:
+                      response.write (b"|not inspired, sorry") 
+                      delay = 2500
+                  self.serialPort.write(response.getvalue())
+              else:
+                  response.write (b"--print--|Nothing found")
+                  self.serialPort.write(response.getvalue())
+                  delay = 2500
 
                 
 
