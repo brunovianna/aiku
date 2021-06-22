@@ -10,3 +10,7 @@ The Raspi downloads random images from wikipedia and uses the google coral TPU t
 * Raspi 3 with Google Coral TPU and 3.2 inch display
 * Wifi kit 4 (ESP8266 board with oled display)
 * PC computer with Nvidia RTX2060 running gpt-2 trained on haikus.
+
+### network
+
+IPs are hardwired to my zerotier setup
