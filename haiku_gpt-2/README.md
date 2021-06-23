@@ -4,7 +4,7 @@
 * Must add models/345M folder with trained haiku files. The train.py can be used to train. My trained models are in 345M.zip in own cloud.
 * Build with ```nvidia-docker build . -t haiku:0.1``` 
 * Run with ```
-nvidia-docker run --name haiku -p 8070:8080 haiku:0.1```
+nvidia-docker run --name haiku -p 8070:8070 haiku:0.1```
 
 
 ## Forked from:
